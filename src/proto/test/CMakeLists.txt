@@ -1,14 +1,15 @@
 find_package(GTest REQUIRED)
 
 add_executable(
-	unit_tests
-	unit_tests_main.cpp
+	test_proto
 	test.cpp
 )
 
 target_link_libraries(
-	unit_tests
+  test_proto PRIVATE
 	pthread
+  proto::msg
 	glog::glog
 	GTest::GTest
+  GTest::Main
 )
