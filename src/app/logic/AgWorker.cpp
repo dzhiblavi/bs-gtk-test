@@ -3,6 +3,8 @@
 
 namespace app::gtk {
 
+AgWorker::~AgWorker() noexcept { Cancel(); }
+
 void AgWorker::Start(const std::filesystem::path& path, const std::string& query) {
   Cancel();
   std::lock_guard<std::mutex> lg(lock_);

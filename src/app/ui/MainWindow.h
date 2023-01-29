@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <fstream>
 #include <thread>
+#include <unordered_map>
 #include <gtkmm.h>
 
 #include "core/logging.h"
@@ -29,6 +30,7 @@ class MainWindow : public Gtk::ApplicationWindow {
   Gtk::ListBox* list_box = nullptr;
   Gtk::TextView* text_view = nullptr;
 
+  std::unordered_map<std::string, ag::AgEntry> entries_;
   AgWorker worker_;
   sigc::slot<bool> update_ui_slot_;
 };

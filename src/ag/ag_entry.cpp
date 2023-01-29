@@ -2,12 +2,13 @@
 
 namespace app::ag {
 
-AgEntry::AgEntry(const std::filesystem::path& path, int32_t line_no)
-  : path_(path), line_no_(line_no) {}
+AgEntry::AgEntry(const std::filesystem::path& path) : path_(path) {}
 
 const std::filesystem::path& AgEntry::Path() const noexcept { return path_; }
 
-int32_t AgEntry::LineNo() const noexcept { return line_no_; }
+const std::vector<int32_t>& AgEntry::LineNos() const noexcept { return line_nos_; }
+
+void AgEntry::AddLineNo(int32_t line_no) { line_nos_.push_back(line_no); }
 
 }  // namespace app::ag
 

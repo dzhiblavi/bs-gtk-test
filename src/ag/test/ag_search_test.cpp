@@ -10,7 +10,7 @@ TEST(ag_search, project_dir) {
 
   AgEntry entry;
   while (iterator.Next(entry)) {
-    std::cout << "entry: " << entry.Path() << " line = " << entry.LineNo() << std::endl;
+    std::cout << "entry: " << entry.Path() << " line = " << entry.LineNos().size() << std::endl;
   }
 }
 

@@ -8,27 +8,55 @@
 namespace app::ag {
 
 bool AgSearchIterator::Next(AgEntry& entry) {
-  static constexpr size_t MAX_PATH_LENGTH = 1024;
+  std::string path;
+  int32_t line_no;
 
-  std::string line;
-  if (!ReadLine(line)) {
+  if (!ReadLine(path, line_no)) {
     return false;
   }
 
-  char path[MAX_PATH_LENGTH];
-  int32_t line_no;
+  std::string s_path(path);
+  entry = AgEntry(s_path);
+  entry.AddLineNo(line_no);
 
-  if (2 == std::sscanf(line.c_str(), "%[^:]:%d:%*s", path, &line_no)) {
-    entry = AgEntry(std::string(path), line_no);
+  for (;;) {
+    if (!ReadLine(path, line_no)) {
+      break;
+    }
+
+    if (path != s_path) {
+      last_line_ = std::make_pair(path, line_no);
+      break;
+    }
+
+    entry.AddLineNo(line_no);
+  }
+
+  return true;
+}
+
+bool AgSearchIterator::ReadLine(std::string& line, int32_t& line_no) {
+  if (last_line_.has_value()) {
+    line = last_line_.value().first;
+    line_no = last_line_.value().second;
+    last_line_ = std::nullopt;
     return true;
-  } else {
+  }
+
+  if (!(child_.running() && std::getline(stream_, line) && !line.empty())) {
+    return false;
+  }
+
+  static constexpr size_t MAX_PATH_LENGTH = 1024;
+  char path[MAX_PATH_LENGTH];
+
+  if (2 != std::sscanf(line.c_str(), "%[^:]:%d:%*s", path, &line_no)) {
     LOG(ERROR) << "Invalid (unrecognized) ag output line: " << line;
     return false;
   }
-}
 
-bool AgSearchIterator::ReadLine(std::string& line) {
-  return child_.running() && std::getline(stream_, line) && !line.empty();
+  line = std::string(path);
+  return true;
 }
 
 AgSearchIterator::~AgSearchIterator() noexcept { child_.wait(); }

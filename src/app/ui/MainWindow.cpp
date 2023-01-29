@@ -42,10 +42,21 @@ void MainWindow::FillTextView(Gtk::ListBoxRow* row_selected) {
   auto* label = dynamic_cast<Gtk::Label*>(box->get_children().front());
   std::filesystem::path path(label->get_label().c_str());
   std::ifstream ifs(path);
+
+  auto tag = text_view->get_buffer()->create_tag();
+  tag->property_background() = "yellow";
+
   text_view->get_buffer()->set_text(
       std::string(
         (std::istreambuf_iterator<char>(ifs)),
         std::istreambuf_iterator<char>()));
+
+  const auto& entry = entries_.at(path);
+  for (int32_t line_no : entry.LineNos()) {
+    auto iter_start = text_view->get_buffer()->get_iter_at_line(line_no - 1);
+    auto iter_end = text_view->get_buffer()->get_iter_at_line(line_no);
+    text_view->get_buffer()->apply_tag(tag, iter_start, iter_end);
+  }
 }
 
 bool MainWindow::UpdateUI() {
@@ -59,8 +70,10 @@ bool MainWindow::UpdateUI() {
         break;
       }
 
+      entries_[entry.Path().string()] = entry;
       Gtk::Label* row_label = Gtk::manage(new Gtk::Label(entry.Path().string()));
       Gtk::Box* row_box = Gtk::manage(new Gtk::Box());
+      row_label->set_alignment(0.0);
       row_box->pack_start(*row_label);
       Gtk::ListBoxRow *row = Gtk::manage(new Gtk::ListBoxRow());
       row->add(*row_box);

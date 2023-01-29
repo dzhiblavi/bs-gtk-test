@@ -8,6 +8,8 @@ namespace app::gtk {
 
 class AgWorker {
  public:
+  ~AgWorker() noexcept;
+
   void Start(const std::filesystem::path& path, const std::string& query);
 
   bool FetchNewResults(std::vector<ag::AgEntry>& out);

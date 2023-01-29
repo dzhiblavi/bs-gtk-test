@@ -7,15 +7,17 @@ namespace app::ag {
 class AgEntry {
  public:
   AgEntry() noexcept = default;
-  AgEntry(const std::filesystem::path& path, int32_t line_no);
+  explicit AgEntry(const std::filesystem::path& path);
 
   const std::filesystem::path& Path() const noexcept;
 
-  int32_t LineNo() const noexcept;
+  const std::vector<int32_t>& LineNos() const noexcept;
+
+  void AddLineNo(int32_t line_no);
 
  private:
   std::filesystem::path path_;
-  int32_t line_no_;
+  std::vector<int32_t> line_nos_;
 };
 
 }  // namespace app::ag

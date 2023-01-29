@@ -23,8 +23,9 @@ class AgSearchIterator {
  private:
   AgSearchIterator() noexcept = default;
 
-  bool ReadLine(std::string& line);
+  bool ReadLine(std::string& path, int32_t& line_no);
 
+  std::optional<std::pair<std::string, int32_t>> last_line_;
   boost::process::ipstream stream_;
   boost::process::child child_;
 };
