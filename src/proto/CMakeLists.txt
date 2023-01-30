@@ -1,22 +1,18 @@
-include(FindProtobuf)
-find_package(Protobuf REQUIRED)
-
-PROTOBUF_GENERATE_CPP(PROTO_SRC PROTO_HEADER msg.proto)
-add_library(proto.msg_LIBRARY ${PROTO_SRC} ${PROTO_HEADER})
-add_library(proto::msg ALIAS proto.msg_LIBRARY)
+protobuf_generate_cpp(PROTO_SRC PROTO_HEADER msg.proto)
+add_library(libproto-msg ${PROTO_SRC} ${PROTO_HEADER})
+add_library(proto::msg ALIAS libproto-msg)
 
 target_compile_options(
-    proto.msg_LIBRARY PRIVATE
+    libproto-msg PRIVATE
     -Wno-unused-parameter  # generated code produces warnings
 )
 target_include_directories(
-    proto.msg_LIBRARY PUBLIC
-    ${PROTOBUF_INCLUDE_DIR}
+    libproto-msg PUBLIC
     ${CMAKE_CURRENT_BINARY_DIR}
 )
 target_link_libraries(
-    proto.msg_LIBRARY PUBLIC
-    ${PROTOBUF_LIBRARY}
+    libproto-msg PUBLIC
+    protobuf::libprotobuf
 )
 
 add_subdirectory(test)

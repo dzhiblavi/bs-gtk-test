@@ -1,16 +1,15 @@
 enable_testing()
 
 add_executable(
-  test_proto
-  test.cpp
+  test_ag_search
+  ag_search_test.cpp
 )
 target_link_libraries(
-  test_proto PRIVATE
+  test_ag_search PRIVATE
+  app::ag
   pthread
-  proto::msg
-  glog::glog
   GTest::gtest_main
 )
 
 include(GoogleTest)
-gtest_discover_tests(test_proto)
+gtest_discover_tests(test_ag_search)

@@ -1,7 +1,7 @@
-add_library(app.logic_LIBRARY STATIC AgWorker.cpp)
-add_library(app::logic ALIAS app.logic_LIBRARY)
+add_library(libapp-logic STATIC AgWorker.cpp)
+add_library(app::logic ALIAS libapp-logic)
 
 target_link_libraries(
-  app.logic_LIBRARY PUBLIC
+  libapp-logic PUBLIC
   app::ag
 )

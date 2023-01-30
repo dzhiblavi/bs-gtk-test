@@ -1,31 +1,17 @@
-add_library(app.ag_LIBRARY STATIC)
-add_library(app::ag ALIAS app.ag_LIBRARY)
+add_library(libapp-ag STATIC)
+add_library(app::ag ALIAS libapp-ag)
 
 target_sources(
-  app.ag_LIBRARY PRIVATE
+  libapp-ag PRIVATE
   ag_entry.cpp
   ag_search.cpp
 )
 
 target_link_libraries(
-  app.ag_LIBRARY PUBLIC
+  libapp-ag PUBLIC
   core::logging
   Boost::boost
   Boost::filesystem
 )
 
-# Tests
-find_package(GTest REQUIRED)
-
-add_executable(
-  ag_search_test
-  test/ag_search_test.cpp
-)
-
-target_link_libraries(
-  ag_search_test PRIVATE
-  app::ag
-  pthread
-  GTest::GTest
-  GTest::Main
-)
+add_subdirectory(test)
