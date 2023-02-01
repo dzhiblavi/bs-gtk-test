@@ -8,7 +8,10 @@ function(cc_library)
   )	
 
   add_library(${ARG_NAME} ${ARG_TYPE}) 
-  add_library(${ARG_ALIAS} ALIAS ${ARG_NAME})
+
+  if(NOT "${ARG_ALIAS}" STREQUAL "")
+    add_library(${ARG_ALIAS} ALIAS ${ARG_NAME})
+  endif()
 
   foreach(src ${ARG_SRCS})
     target_sources(${ARG_NAME} PRIVATE ${src})
