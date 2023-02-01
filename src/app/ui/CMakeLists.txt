@@ -1,10 +1,13 @@
-add_library(libapp-ui STATIC app_main.cpp MainWindow.cpp)
-add_library(app::ui ALIAS libapp-ui)
-
-target_link_libraries(
-  libapp-ui PUBLIC
-  app::ag
-  core::logging
-  core::compiler
-  Gtk::Gtk
+cc_library(
+  NAME app-ui
+  ALIAS app::ui
+  TYPE STATIC
+  SRCS
+    app_main.cpp
+    MainWindow.cpp
+  DEPS
+    core::logging
+    core::compiler
+  SYSTEM
+    Gtk::Gtk
 )

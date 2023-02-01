@@ -1,16 +1,9 @@
-enable_testing()
-
-add_executable(
-  test_proto
-  test.cpp
+cc_test(
+  NAME test_proto
+  SRCS
+    test.cpp
+  DEPS
+    proto::msg
+  SYSTEM
+    glog::glog
 )
-target_link_libraries(
-  test_proto PRIVATE
-  pthread
-  proto::msg
-  glog::glog
-  GTest::gtest_main
-)
-
-include(GoogleTest)
-gtest_discover_tests(test_proto)

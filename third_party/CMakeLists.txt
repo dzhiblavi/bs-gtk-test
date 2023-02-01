@@ -1,4 +1,6 @@
 find_package(PkgConfig REQUIRED)
+include(FetchContent)
+set(FETCHCONTENT_QUIET FALSE)
 
 include(third_party/boost.cmake)
 include(third_party/glog.cmake)
