@@ -3,7 +3,7 @@ function(cc_library)
     ARG
     ""
     "NAME;ALIAS;TYPE"
-    "HDRS;SRCS;DEPS;SYSTEM;COPTS"
+    "HDR_DIRS;SRCS;DEPS;SYSTEM;COPTS"
     ${ARGN}
   )	
 
@@ -16,8 +16,8 @@ function(cc_library)
   foreach(src ${ARG_SRCS})
     target_sources(${ARG_NAME} PRIVATE ${src})
   endforeach()
-  foreach(hdr ${ARG_HDRS})
-    target_sources(${ARG_NAME} INTERFACE ${hdr})
+  foreach(hdr_dir ${ARG_HDR_DIRS})
+    target_include_directories(${ARG_NAME} INTERFACE ${hdr_dir})
   endforeach()
 
   if("${ARG_TYPE}" STREQUAL "INTERFACE")

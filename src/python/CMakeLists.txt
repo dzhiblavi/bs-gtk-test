@@ -1,8 +1,8 @@
 cc_library(
   NAME greet
   TYPE STATIC
-  HDRS greet.h
   SRCS greet.cpp
+  HDR_DIRS ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 cc_python_module(

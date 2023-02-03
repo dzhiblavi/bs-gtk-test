@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include <gtkmm.h>
 
-#include "core/logging.h"
+#include "core/logging/logging.h"
 #include "app/logic/AgWorker.h"
 
 namespace app::gtk {

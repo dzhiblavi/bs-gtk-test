@@ -13,17 +13,12 @@ function(cc_proto_library)
     NAME ${ARG_NAME}
     ALIAS ${ARG_ALIAS}
     TYPE ${ARG_TYPE}
-    HDRS ${PROTO_HEADER}
+    HDR_DIRS ${CMAKE_CURRENT_BINARY_DIR}
     SRCS ${PROTO_SRC}
     SYSTEM protobuf::libprotobuf
     COPTS
       -Wno-unused-parameter
       -Wno-implicit-int-float-conversion
       -Wno-sign-conversion
-  )
-
-  target_include_directories(
-    ${ARG_NAME} PUBLIC
-    ${CMAKE_CURRENT_BINARY_DIR}
   )
 endfunction()

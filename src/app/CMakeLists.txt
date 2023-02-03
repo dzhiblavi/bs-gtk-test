@@ -7,4 +7,5 @@ cc_binary(
   DEPS
     app::ui
     app::logic
+    project::config
 )

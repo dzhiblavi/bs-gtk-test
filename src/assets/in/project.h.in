@@ -1,0 +1,4 @@
+#pragma once
+
+#define PROJECT_VERSION_MAJOR @cpp_gtk_VERSION_MAJOR@
+#define PROJECT_VERSION_MINOR @cpp_gtk_VERSION_MINOR@

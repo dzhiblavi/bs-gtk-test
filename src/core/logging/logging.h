@@ -2,7 +2,7 @@
 
 #include <glog/logging.h>
 
-#include "core/compiler.h"
+#include "core/compiler/compiler.h"
 
 namespace core::logging {
 
